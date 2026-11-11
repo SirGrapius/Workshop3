@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,6 +26,8 @@ public class PlatformerMovement : MonoBehaviour
     
     private Vector2 moveInput;
     private Rigidbody2D rb;
+
+    public bool inDialog;
     
     // Platformer specific variables
     private CircleCollider2D groundCheckCollider;
@@ -52,13 +55,16 @@ public class PlatformerMovement : MonoBehaviour
     
     void Update()
     {
-        velocity = TranslateInputToVelocity(moveInput);
-        
-        // Apply jump-input:
-        if (jumpInput && wasGrounded)
+        if (!inDialog)
         {
-            velocity.y = jumpForce;
-            jumpInput = false;
+            velocity = TranslateInputToVelocity(moveInput);
+        
+            // Apply jump-input:
+            if (jumpInput && wasGrounded)
+            {
+                velocity.y = jumpForce;
+                jumpInput = false;
+            }
         }
         
         if (rb.linearVelocityY < 0)
@@ -201,6 +207,18 @@ public class PlatformerMovement : MonoBehaviour
         {
             jumpReleased = true;
             jumpInput = false;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.tag == "NPC")
+        {
+            NPC npc = other.gameObject.GetComponent<NPC>();
+            if (Keyboard.current[Key.E].wasPressedThisFrame && !inDialog)
+            {
+                npc.Talk(this);
+            }
         }
     }
 
