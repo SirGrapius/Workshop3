@@ -37,7 +37,7 @@ public class NPC : MonoBehaviour
             if (Keyboard.current[Key.E].wasPressedThisFrame)
             {
                 dialogIndex++;
-                if (dialogIndex >= myDialogs.Count - 1)
+                if (dialogIndex > myDialogs.Count - 1)
                 {
                     EndDialogue();
                 }
@@ -65,7 +65,9 @@ public class NPC : MonoBehaviour
     private void EndDialogue()
     {
         dialog.gameObject.SetActive(false);
+        dialogIndex = 0;
         player.inDialog = false;
+        StartCoroutine(player.DialogCooldown());
     }
 
     private void OnTriggerEnter2D(Collider2D other)

@@ -28,6 +28,8 @@ public class PlatformerMovement : MonoBehaviour
     private Rigidbody2D rb;
 
     public bool inDialog;
+    private bool dialogCooldown;
+    private NPC currentNPC = null;
     
     // Platformer specific variables
     private CircleCollider2D groundCheckCollider;
@@ -65,6 +67,11 @@ public class PlatformerMovement : MonoBehaviour
                 velocity.y = jumpForce;
                 jumpInput = false;
             }
+        }
+        
+        if (currentNPC && Keyboard.current[Key.E].wasPressedThisFrame && !dialogCooldown)
+        {
+            currentNPC.Talk(this);
         }
         
         if (rb.linearVelocityY < 0)
@@ -210,16 +217,29 @@ public class PlatformerMovement : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "NPC")
         {
-            NPC npc = other.gameObject.GetComponent<NPC>();
-            if (Keyboard.current[Key.E].wasPressedThisFrame && !inDialog)
-            {
-                npc.Talk(this);
-            }
+            currentNPC = other.gameObject.GetComponent<NPC>();
+            
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.tag == "NPC")
+        {
+            currentNPC = null;
+        }
+    }
+
+    public IEnumerator DialogCooldown()
+    {
+        dialogCooldown = true;
+        yield return new WaitForSeconds(0.5f);
+        dialogCooldown = false;
+        yield return null;
     }
 
     public void Action2(InputAction.CallbackContext context)
