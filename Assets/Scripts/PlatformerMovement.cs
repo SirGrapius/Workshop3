@@ -18,10 +18,11 @@ public class PlatformerMovement : MonoBehaviour
 {
 
     [Header("Stats")]
-    [SerializeField] private int maxHealth;
+    public readonly int maxHealth;
     [SerializeField] private int health;
     [SerializeField] private float maxSpeed = 10f;
     [SerializeField] private float jumpForce = 10f;
+    [SerializeField] private Vector3 startPos;
     // [SerializeField] private float gravityMultiplier = 1;    //unused
     [Header("Components")]
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -51,11 +52,12 @@ public class PlatformerMovement : MonoBehaviour
         
         groundCheckCollider = GetComponent<CircleCollider2D>();
         groundCheckCollider.isTrigger = true;
+        fader = GameObject.FindGameObjectWithTag("ScreenFader").GetComponent<ScreenFade>();
         
         // Set gravity scale to 0 so player won't "fall" 
         rb.gravityScale = 0;
-
-        //animator = GetComponent<Animator>();
+        startPos = transform.position;
+        animator = GetComponentInChildren<Animator>();
     }
     
     void Update()
@@ -248,7 +250,12 @@ public class PlatformerMovement : MonoBehaviour
 
     private IEnumerator Die()
     {
-
+        health = maxHealth;
+        transform.position = startPos;
+        StartCoroutine(fader.FadeInAndOut(3));
+        inDialog = true;
+        yield return new WaitForSeconds(3);
+        inDialog = false;
         yield return null;
     }
 

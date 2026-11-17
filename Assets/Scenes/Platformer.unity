@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 278365486}
   m_Layer: 0
   m_Name: ScreenFader
-  m_TagString: Untagged
+  m_TagString: ScreenFader
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1789,12 +1789,13 @@ MonoBehaviour:
   maxSpeed: 10
   jumpForce: 13
   spriteRenderer: {fileID: 1552012497}
+  animator: {fileID: 1552012495}
+  fader: {fileID: 0}
   onAction2:
     m_PersistentCalls:
       m_Calls: []
   inDialog: 0
   isGrounded: 0
-  animator: {fileID: 1552012495}
 --- !u!4 &1558861402
 Transform:
   m_ObjectHideFlags: 0
