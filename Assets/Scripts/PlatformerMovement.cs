@@ -16,33 +16,34 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Rigidbody2D), typeof(CircleCollider2D), typeof(CapsuleCollider2D))]
 public class PlatformerMovement : MonoBehaviour
 {
+
+    [Header("Stats")]
     [SerializeField] private int maxHealth;
     [SerializeField] private int health;
     [SerializeField] private float maxSpeed = 10f;
     [SerializeField] private float jumpForce = 10f;
     // [SerializeField] private float gravityMultiplier = 1;    //unused
+    [Header("Components")]
     [SerializeField] private SpriteRenderer spriteRenderer;
-
-    public bool controlEnabled { get; set; } = true; // You can edit this variable from Unity Events
-    public UnityEvent onAction2;
-    
-    private Vector2 moveInput;
+    [SerializeField] private Animator animator;
+    [SerializeField] private ScreenFade fader;
     private Rigidbody2D rb;
+    private CircleCollider2D groundCheckCollider;
+    private Vector2 velocity;
 
+    [Header("Checks")]
+    public UnityEvent onAction2;
+    private LayerMask groundLayer = 3; // ~0 is referring to EVERY layer. Do you want a specific layer? Serialize the variable and assign the Layer of your choice.
+    private Vector2 moveInput;
+    public bool controlEnabled { get; set; } = true; // You can edit this variable from Unity Events
     public bool inDialog;
     private bool dialogCooldown;
     private NPC currentNPC = null;
-    
     // Platformer specific variables
-    private CircleCollider2D groundCheckCollider;
-    private LayerMask groundLayer = 3; // ~0 is referring to EVERY layer. Do you want a specific layer? Serialize the variable and assign the Layer of your choice.
-    private Vector2 velocity;
     private bool jumpInput;
     private bool jumpReleased;
     private bool wasGrounded;
     [SerializeField] bool isGrounded;
-
-    [SerializeField] private Animator animator;
     
     void Awake()
     {
