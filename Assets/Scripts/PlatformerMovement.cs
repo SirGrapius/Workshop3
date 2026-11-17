@@ -16,6 +16,8 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Rigidbody2D), typeof(CircleCollider2D), typeof(CapsuleCollider2D))]
 public class PlatformerMovement : MonoBehaviour
 {
+    [SerializeField] private int maxHealth;
+    [SerializeField] private int health;
     [SerializeField] private float maxSpeed = 10f;
     [SerializeField] private float jumpForce = 10f;
     // [SerializeField] private float gravityMultiplier = 1;    //unused
@@ -33,7 +35,7 @@ public class PlatformerMovement : MonoBehaviour
     
     // Platformer specific variables
     private CircleCollider2D groundCheckCollider;
-    private LayerMask groundLayer = ~0; // ~0 is referring to EVERY layer. Do you want a specific layer? Serialize the variable and assign the Layer of your choice.
+    private LayerMask groundLayer = 3; // ~0 is referring to EVERY layer. Do you want a specific layer? Serialize the variable and assign the Layer of your choice.
     private Vector2 velocity;
     private bool jumpInput;
     private bool jumpReleased;
@@ -232,6 +234,21 @@ public class PlatformerMovement : MonoBehaviour
         {
             currentNPC = null;
         }
+    }
+
+    public void TakeDamage(int amount)
+    {
+        health -= amount;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    private IEnumerator Die()
+    {
+
+        yield return null;
     }
 
     public IEnumerator DialogCooldown()
