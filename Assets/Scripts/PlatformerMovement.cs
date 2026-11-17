@@ -18,7 +18,7 @@ public class PlatformerMovement : MonoBehaviour
 {
 
     [Header("Stats")]
-    public readonly int maxHealth;
+    public readonly int maxHealth = 3;
     [SerializeField] private int health;
     [SerializeField] private float maxSpeed = 10f;
     [SerializeField] private float jumpForce = 10f;
@@ -33,6 +33,8 @@ public class PlatformerMovement : MonoBehaviour
     private Vector2 velocity;
 
     [Header("Checks")]
+
+    public bool iframes;
     public UnityEvent onAction2;
     private LayerMask groundLayer = 3; // ~0 is referring to EVERY layer. Do you want a specific layer? Serialize the variable and assign the Layer of your choice.
     private Vector2 moveInput;
@@ -48,6 +50,7 @@ public class PlatformerMovement : MonoBehaviour
     
     void Awake()
     {
+        health = maxHealth;
         rb = GetComponent<Rigidbody2D>();
         
         groundCheckCollider = GetComponent<CircleCollider2D>();
@@ -239,13 +242,20 @@ public class PlatformerMovement : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int amount)
+    public IEnumerator TakeDamage(int amount)
     {
+        Color originalColor = spriteRenderer.color;
         health -= amount;
+        spriteRenderer.color = new Color(255, 0, 0);
+        iframes = true;
+        yield return new WaitForSeconds(0.25f);
+        spriteRenderer.color = originalColor;
+        iframes = false;
         if (health <= 0)
         {
             Die();
         }
+        yield return null;
     }
 
     private IEnumerator Die()

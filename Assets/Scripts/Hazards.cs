@@ -21,7 +21,10 @@ public class Hazards : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             PlatformerMovement playerScript = collision.gameObject.GetComponent<PlatformerMovement>();
-            playerScript.TakeDamage(damage);
+            if (playerScript.iframes == false)
+            {
+                StartCoroutine(playerScript.TakeDamage(damage));
+            }
         }
     }
 }
