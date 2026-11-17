@@ -4206,7 +4206,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2805986220232554206, guid: 954b805c5e796ad4a89e18c39757621c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2805986220232554206, guid: 954b805c5e796ad4a89e18c39757621c, type: 3}
+      propertyPath: m_TagString
+      value: DialogBox
       objectReference: {fileID: 0}
     - target: {fileID: 4011357404079316658, guid: 954b805c5e796ad4a89e18c39757621c, type: 3}
       propertyPath: m_Pivot.x
@@ -4295,6 +4299,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2805986220232554206, guid: 954b805c5e796ad4a89e18c39757621c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1213368980}
+    - targetCorrespondingSourceObject: {fileID: 2805986220232554206, guid: 954b805c5e796ad4a89e18c39757621c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 954b805c5e796ad4a89e18c39757621c, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
