@@ -45,7 +45,6 @@ public class ForcedDialogue : MonoBehaviour
         player.inDialog = true;
         dialog.gameObject.SetActive(true);
         dialog.text.text = myDialogs[dialogIndex];
-
     }
 
     private void EndDialogue()
