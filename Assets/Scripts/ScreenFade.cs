@@ -45,8 +45,8 @@ public class ScreenFade : MonoBehaviour
     {
         Color startColor = new Color(renderer.color.r, renderer.color.g, renderer.color.b, 0);
         Color targetColor = new Color(renderer.color.r, renderer.color.g, renderer.color.b, 1);
-        yield return FadeCoroutine(startColor, targetColor, duration);
+        yield return FadeCoroutine(startColor, targetColor, duration/2);
         yield return new WaitForSeconds(duration);
-        yield return FadeCoroutine(targetColor, startColor, duration);
+        yield return FadeCoroutine(targetColor, startColor, duration/2);
     }
 }

@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
+using Unity.VisualScripting;
 
-            /////////////// INFORMATION ///////////////
+
+/////////////// INFORMATION ///////////////
 // This script automatically adds a Rigidbody2D, CapsuleCollider2D and CircleCollider2D component in the inspector.
 // The Rigidbody2D component should (probably) have some constraints: Freeze Rotation Z
 // The Circle Collider 2D should be set to "is trigger", resized and moved to a proper position.
@@ -230,7 +232,10 @@ public class PlatformerMovement : MonoBehaviour
         if (other.tag == "NPC")
         {
             currentNPC = other.gameObject.GetComponent<NPC>();
-            
+        }
+        if (other.tag == "Killbox")
+        {
+            StartCoroutine(Die());
         }
     }
 
@@ -253,7 +258,7 @@ public class PlatformerMovement : MonoBehaviour
         iframes = false;
         if (health <= 0)
         {
-            Die();
+            StartCoroutine(Die());
         }
         yield return null;
     }
@@ -261,10 +266,11 @@ public class PlatformerMovement : MonoBehaviour
     private IEnumerator Die()
     {
         health = maxHealth;
-        transform.position = startPos;
         StartCoroutine(fader.FadeInAndOut(3));
         inDialog = true;
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1.5f);
+        transform.position = startPos;
+        yield return new WaitForSeconds(1.5f);
         inDialog = false;
         yield return null;
     }
