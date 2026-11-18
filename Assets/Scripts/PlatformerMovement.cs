@@ -19,22 +19,28 @@ using Unity.VisualScripting;
 public class PlatformerMovement : MonoBehaviour
 {
 
-    [Header("Stats")]
-    public readonly int maxHealth = 3;
+    [Header("Stats")] public readonly int maxHealth = 3;
     [SerializeField] private int health;
     [SerializeField] private float maxSpeed = 10f;
     [SerializeField] private float jumpForce = 10f;
+
     [SerializeField] private Vector3 startPos;
+
     // [SerializeField] private float gravityMultiplier = 1;    //unused
-    [Header("Components")]
-    [SerializeField] private SpriteRenderer spriteRenderer;
+    [Header("Components")] [SerializeField]
+    private SpriteRenderer spriteRenderer;
+
     [SerializeField] private Animator animator;
     [SerializeField] private ScreenFade fader;
+    [SerializeField] private List<SpriteRenderer> healthIndicators;
+    [SerializeField] private Sprite[] heartSprites;
+    [SerializeField] private ParticleSystem particles;
     private Rigidbody2D rb;
     private CircleCollider2D groundCheckCollider;
     private Vector2 velocity;
 
-    [Header("Checks")]
+    [Header("Checks")] 
+    public bool hasGem = false;
     public bool iframes;
     public UnityEvent onAction2;
     private LayerMask groundLayer = 3; // ~0 is referring to EVERY layer. Do you want a specific layer? Serialize the variable and assign the Layer of your choice.
@@ -57,6 +63,7 @@ public class PlatformerMovement : MonoBehaviour
         groundCheckCollider = GetComponent<CircleCollider2D>();
         groundCheckCollider.isTrigger = true;
         fader = GameObject.FindGameObjectWithTag("ScreenFader").GetComponent<ScreenFade>();
+        particles = GetComponentInChildren<ParticleSystem>();
         
         // Set gravity scale to 0 so player won't "fall" 
         rb.gravityScale = 0;
@@ -77,10 +84,29 @@ public class PlatformerMovement : MonoBehaviour
                 jumpInput = false;
             }
         }
-        
-        if (currentNPC && Keyboard.current[Key.E].wasPressedThisFrame && !dialogCooldown)
+
+        if (health < maxHealth)
         {
-            currentNPC.Talk(this);
+            for (int i = 0; i <= healthIndicators.Count-1; i++)
+            {
+                if (i > health-1)
+                {
+                    healthIndicators[i].sprite = heartSprites[1];
+                }
+                else
+                {
+                    healthIndicators[i].sprite = heartSprites[0];
+                }
+            }
+        }
+        
+        if (currentNPC && Keyboard.current[Key.E].wasPressedThisFrame && !dialogCooldown && !hasGem)
+        {
+            currentNPC.Talk(this, currentNPC.basicDialogs);
+        }
+        else if (currentNPC && Keyboard.current[Key.E].wasPressedThisFrame && !dialogCooldown && hasGem)
+        {
+            currentNPC.Talk(this, currentNPC.victoryDialogs);
         }
         
         if (rb.linearVelocityY < 0)
@@ -208,6 +234,12 @@ public class PlatformerMovement : MonoBehaviour
         }
     }
 
+    public void GotGem()
+    {
+        hasGem = true;
+        
+    }
+
     // Handle Jump-input
     // This method can be triggered through the UnityEvent in PlayerInput
     public void OnJump(InputAction.CallbackContext context)
@@ -234,7 +266,7 @@ public class PlatformerMovement : MonoBehaviour
         }
         if (other.tag == "Killbox")
         {
-            StartCoroutine(Die());
+            StartCoroutine(TakeDamage(maxHealth));
         }
     }
 
@@ -251,8 +283,10 @@ public class PlatformerMovement : MonoBehaviour
         Color originalColor = spriteRenderer.color;
         health -= amount;
         spriteRenderer.color = new Color(255, 0, 0);
+        particles.Play();
         iframes = true;
         yield return new WaitForSeconds(0.25f);
+        particles.Stop();
         spriteRenderer.color = originalColor;
         iframes = false;
         if (health <= 0)
@@ -266,6 +300,7 @@ public class PlatformerMovement : MonoBehaviour
     {
         health = maxHealth;
         StartCoroutine(fader.FadeInAndOut(3));
+        rb.linearVelocity = Vector2.zero;
         inDialog = true;
         yield return new WaitForSeconds(1.5f);
         transform.position = startPos;

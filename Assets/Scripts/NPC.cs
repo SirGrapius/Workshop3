@@ -12,7 +12,9 @@ public class NPC : MonoBehaviour
     [SerializeField] private PlatformerMovement player;
     [SerializeField] private TextMeshPro interactIndicator;
 
-    [SerializeField] public List<string> myDialogs;
+    [SerializeField] private List<string> currentDialogs;
+    [SerializeField] public List<string> basicDialogs;
+    [SerializeField] public List<string> victoryDialogs;
     private int dialogIndex = 0;
     
     
@@ -32,12 +34,12 @@ public class NPC : MonoBehaviour
     {
         if (player && player.inDialog)
         {
-            dialog.text.text = myDialogs[dialogIndex];
+            dialog.text.text = currentDialogs[dialogIndex];
 
             if (Keyboard.current[Key.E].wasPressedThisFrame)
             {
                 dialogIndex++;
-                if (dialogIndex > myDialogs.Count - 1)
+                if (dialogIndex > currentDialogs.Count - 1)
                 {
                     EndDialogue();
                 }
@@ -45,8 +47,9 @@ public class NPC : MonoBehaviour
         }
     }
 
-    public void Talk(PlatformerMovement currentPlayer)
+    public void Talk(PlatformerMovement currentPlayer, List<string> dialogs)
     {
+        currentDialogs = dialogs;
         player = currentPlayer;
         if (player.transform.position.x > transform.position.x)
         {
@@ -58,7 +61,7 @@ public class NPC : MonoBehaviour
         }
         player.inDialog = true;
         dialog.gameObject.SetActive(true);
-        dialog.text.text = myDialogs[dialogIndex];
+        dialog.text.text = currentDialogs[dialogIndex];
 
     }
 
@@ -66,6 +69,7 @@ public class NPC : MonoBehaviour
     {
         dialog.gameObject.SetActive(false);
         dialogIndex = 0;
+        currentDialogs = null;
         player.inDialog = false;
         StartCoroutine(player.DialogCooldown());
     }
