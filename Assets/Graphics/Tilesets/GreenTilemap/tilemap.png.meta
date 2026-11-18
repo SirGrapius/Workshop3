@@ -633,6 +633,32 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -3368,10 +3394,10 @@ TextureImporter:
       name: tilemap_124
       rect:
         serializedVersion: 2
-        x: 77
+        x: 76
         y: 38
-        width: 16
-        height: 12
+        width: 18
+        height: 18
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -3390,9 +3416,9 @@ TextureImporter:
       name: tilemap_125
       rect:
         serializedVersion: 2
-        x: 96
+        x: 95
         y: 38
-        width: 16
+        width: 18
         height: 18
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -3412,9 +3438,9 @@ TextureImporter:
       name: tilemap_126
       rect:
         serializedVersion: 2
-        x: 117
+        x: 114
         y: 38
-        width: 12
+        width: 18
         height: 18
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -3434,9 +3460,9 @@ TextureImporter:
       name: tilemap_127
       rect:
         serializedVersion: 2
-        x: 135
+        x: 133
         y: 38
-        width: 14
+        width: 18
         height: 18
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -3456,10 +3482,10 @@ TextureImporter:
       name: tilemap_128
       rect:
         serializedVersion: 2
-        x: 155
+        x: 152
         y: 38
-        width: 12
-        height: 12
+        width: 18
+        height: 18
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -3811,7 +3837,7 @@ TextureImporter:
         x: 95
         y: 19
         width: 18
-        height: 16
+        height: 18
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -4094,10 +4120,10 @@ TextureImporter:
       name: tilemap_157
       rect:
         serializedVersion: 2
-        x: 77
+        x: 76
         y: 19
-        width: 16
-        height: 7
+        width: 18
+        height: 18
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -4116,10 +4142,10 @@ TextureImporter:
       name: tilemap_158
       rect:
         serializedVersion: 2
-        x: 153
+        x: 152
         y: 19
-        width: 16
-        height: 8
+        width: 18
+        height: 18
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -4138,10 +4164,10 @@ TextureImporter:
       name: tilemap_159
       rect:
         serializedVersion: 2
-        x: 172
+        x: 171
         y: 19
-        width: 16
-        height: 6
+        width: 18
+        height: 18
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
