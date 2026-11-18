@@ -35,7 +35,6 @@ public class PlatformerMovement : MonoBehaviour
     private Vector2 velocity;
 
     [Header("Checks")]
-
     public bool iframes;
     public UnityEvent onAction2;
     private LayerMask groundLayer = 3; // ~0 is referring to EVERY layer. Do you want a specific layer? Serialize the variable and assign the Layer of your choice.
